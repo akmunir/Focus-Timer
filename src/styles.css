@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+:root {
+    --degrees: 0deg;
+}
+
+.bg-conic {
+    background: conic-gradient(
+        transparent 0deg,
+        transparent var(--degrees),
+        white var(--degrees),
+        white var(--degrees),
+        white 360deg
+        /* orange 6deg 18deg,
+        yellow 18deg 45deg,
+        green 45deg 110deg,
+        blue 110deg 200deg,
+        purple 200deg */
+    )
+}
+
+.hand {
+    transform-origin: bottom center;
+    transform: rotate(var(--degrees));
+}
+
+input[type=number] {
+  -webkit-appearance: none;
+  -moz-appearance:    textfield;
+  appearance:         textfield;
+}
