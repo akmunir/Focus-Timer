@@ -34,11 +34,17 @@ function formatInput(event) {
         newSeconds = seconds - 60;
         newMinutes = minutes + 1;
         console.log(newMinutes)
+    } else {
+        newSeconds = seconds;
+        newMinutes = minutes;
     }
     if (minutes > 60) {
         newMinutes = newMinutes - 60;
         console.log(newMinutes)
         newHours = hours + 1;
+    } else {
+        newMinutes = minutes;
+        newHours = hours;
     }
     console.log(Math.floor((newMinutes / 10)).toString());
     console.log(newHours, newMinutes, newSeconds)
