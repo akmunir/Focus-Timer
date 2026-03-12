@@ -1,67 +1,65 @@
 import './styles.css';
+import { formatInput, emptyTextBox, runTimer, buttonHandler } from "./timer-handling.js";
 
+
+
+const shortBtn = document.querySelector(".short-btn");
+const focusBtn = document.querySelector(".focus-btn");
 const timerEl = document.querySelector("#timer");
 const currentTime = timerEl.textContent.toString();
 const timeInput = document.querySelector("#time");
+const startButton = document.querySelector("#start");
+const resetButton = document.querySelector("#reset");
+const skipButton = document.querySelector("#skip");
+const focusTimer = document.querySelector("#focus-timer");
+const shortBreakTimer = document.querySelector("#short-break-timer");
+const longBreakTimer = document.querySelector("#long-break-timer");
+const longBtn = document.querySelector(".long-btn");
+
 //console.log(timeInput.value);
 let hours = 0;
 const timerInterval = setInterval(runTimer, 1000);
 //addEventListener("focusout", formatInput);
+
+
 addEventListener("focusout", formatInput);
 addEventListener("focusin", emptyTextBox)
 
-function formatInput(event) {
-    let totalTime = Number(event.target.value);
-    const time = [0, 0, 0, 0, 0, 0];
-    let index = time.length - 1;
-    let remaining = totalTime;
+startButton.addEventListener("click", () => {
+    startButton.classList.toggle("play");
+    const startIcon = startButton.querySelector("i");
+    startIcon.classList.toggle("fa-play");
+    startIcon.classList.toggle("fa-pause");
+    
+});
 
-    do {
-        time[index] = remaining % 10;
-        remaining = Math.floor(remaining / 10);
-        index--;
-    } while (remaining !== 0 && index >= 0);
+focusBtn.addEventListener("click", () => {
+    focusTimer.classList.remove("hidden");
+    focusBtn.classList.add("active");
+    shortBreakTimer.classList.add("hidden");
+    shortBtn.classList.remove("active");
+    longBreakTimer.classList.add("hidden");
+    longBtn.classList.remove("active");
+})
 
-    let hours = time[0] * 10 + time[1];
-    let minutes = time[2] * 10 + time[3];
-    let seconds = time[4] * 10 + time[5];
-    let newSeconds = 0
-    let newMinutes = 0
-    let newHours = 0;
-    console.log(hours, minutes, seconds)
+shortBtn.addEventListener("click", () => {
+    shortBreakTimer.classList.remove("hidden");
+    shortBtn.classList.add("active");
+    focusTimer.classList.add("hidden");
+    focusBtn.classList.remove("active");
+    longBreakTimer.classList.add("hidden");
+    longBtn.classList.remove("active");
+})
 
-    if (seconds > 60) {
-        newSeconds = seconds - 60;
-        newMinutes = minutes + 1;
-        console.log(newMinutes)
-    } else {
-        newSeconds = seconds;
-        newMinutes = minutes;
-    }
-    if (minutes > 60) {
-        newMinutes = newMinutes - 60;
-        console.log(newMinutes)
-        newHours = hours + 1;
-    } else {
-        newMinutes = minutes;
-        newHours = hours;
-    }
-    console.log(Math.floor((newMinutes / 10)).toString());
-    console.log(newHours, newMinutes, newSeconds)
-    const formattedTime = Math.floor((newHours / 10)).toString() + (newHours % 10).toString() + ":"
-        + Math.floor((newMinutes / 10)).toString() + (newMinutes % 10).toString() + ":"
-        + Math.floor((newSeconds / 10)).toString() + (newSeconds % 10).toString();
-    event.target.value = formattedTime;
-    // potential edge case where minutes causes hours to have some sort of wrapping situation
-}
+longBtn.addEventListener("click", () => {
+    longBreakTimer.classList.remove("hidden");
+    longBtn.classList.add("active");
+    shortBreakTimer.classList.add("hidden");
+    shortBtn.classList.remove("active");
+    focusTimer.classList.add("hidden");
+    focusBtn.classList.remove("active");
+})
 
-function emptyTextBox(event) {
-    event.target.value = "";
-}
-
-function runTimer() {
-
-}
     
 
 

@@ -30,3 +30,8 @@ input[type=number] {
   -moz-appearance:    textfield;
   appearance:         textfield;
 }
+
+.active {
+    border-bottom: 2px solid;
+    border-color: blue-300;
+}
