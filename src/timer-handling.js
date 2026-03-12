@@ -1,3 +1,8 @@
+let totalTimeInSeconds = 0;
+let isActive = false;
+let timerInterval = 0;
+const timerInput = document.querySelector("#time")
+
 export function formatInput(event) {
     let totalTime = Number(event.target.value);
     const time = [0, 0, 0, 0, 0, 0];
@@ -38,6 +43,7 @@ export function formatInput(event) {
     console.log(newHours, newMinutes, newSeconds)
     const formattedTime = generateFormattedTime(newHours, newMinutes, newSeconds);
     event.target.value = formattedTime;
+    totalTimeInSeconds = (newHours * 3600) + (newMinutes * 60) + newSeconds;
     // potential edge case where minutes causes hours to have some sort of wrapping situation
 }
 
@@ -50,14 +56,36 @@ export function emptyTextBox(event) {
     event.target.value = "";
 }
 
-export function runTimer() {
-
-}
-
 export function buttonHandler(event) {
     console.log("clicked");
     event.target.classList.toggle("fa-pause");
     event.target.classList.toggle("fa-play");
     event.target.classList.toggle('bg-green-500');
     
+}
+
+export function runTimer() {
+    if (!runTimer || totalTimeInSeconds <= 0) {
+        console.log(totalTimeInSeconds)
+        return;
+    }
+    console.log("running");
+    totalTimeInSeconds--;
+    console.log(totalTimeInSeconds)
+    let hours = Math.floor(totalTimeInSeconds / 3600);
+    let minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
+    let seconds = Math.floor(totalTimeInSeconds % 60);
+    timerInput.value = generateFormattedTime(hours, minutes, seconds);
+
+}
+
+export function timerToggle() {
+    console.log("toggle")
+    isActive = !isActive;
+    console.log(isActive)
+    if (isActive) {
+        timerInterval = setInterval(runTimer, 1000);
+    } else {
+        clearInterval(timerInterval);
+    }
 }
