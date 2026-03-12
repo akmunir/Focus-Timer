@@ -16,6 +16,7 @@ const focusTimer = document.querySelector("#focus-timer");
 const shortBreakTimer = document.querySelector("#short-break-timer");
 const longBreakTimer = document.querySelector("#long-break-timer");
 const longBtn = document.querySelector(".long-btn");
+const startIcon = startButton.querySelector("i");
 
 
 //console.log(timeInput.value);
@@ -30,15 +31,17 @@ addEventListener("focusin", emptyTextBox)
 startButton.addEventListener("click", () => {
     timerToggle();
     startButton.classList.toggle("play");
-    const startIcon = startButton.querySelector("i");
     startIcon.classList.toggle("fa-play");
     startIcon.classList.toggle("fa-pause");
     
 });
 
 resetButton.addEventListener("click", () => {
-    timerToggle;
+    timerToggle();
     timeInput.value = "";
+   startIcon.classList.add("fa-play");
+   startIcon.classList.remove("fa-pause");
+
 })
 
 

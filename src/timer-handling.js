@@ -65,8 +65,9 @@ export function buttonHandler(event) {
 }
 
 export function runTimer() {
-    if (!runTimer || totalTimeInSeconds <= 0) {
+    if (!isActive || totalTimeInSeconds <= 0) {
         console.log(totalTimeInSeconds)
+        timerToggle();
         return;
     }
     console.log("running");
@@ -87,5 +88,6 @@ export function timerToggle() {
         timerInterval = setInterval(runTimer, 1000);
     } else {
         clearInterval(timerInterval);
+        console.log("stopping")
     }
 }
