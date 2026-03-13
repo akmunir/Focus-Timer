@@ -1,7 +1,13 @@
+import { resetTimer, switchActiveToShort, switchActiveToFocus, switchActiveToLong } from "./index.js";
 let totalTimeInSeconds = 0;
 let isActive = false;
 let timerInterval = 0;
-const timerInput = document.querySelector("#time")
+const timerInputElements = document.querySelectorAll("#time");
+export let activeTimerIndex = 0;
+export const timerState = {
+    activeTimerIndex: 0,
+};
+let timerOffFlag = false;
 
 export function formatInput(event) {
     let totalTime = Number(event.target.value);
@@ -64,19 +70,37 @@ export function buttonHandler(event) {
     
 }
 
+
+
+export function switchTimer() {
+    console.log("switch");
+    resetTimer();
+    if (timerState.activeTimerIndex == 0) {
+        switchActiveToShort();
+    } else if (timerState.activeTimerIndex == 1) {
+        switchActiveToLong();
+    } else {
+        switchActiveToFocus();
+    }
+}
 export function runTimer() {
     if (!isActive || totalTimeInSeconds <= 0) {
         console.log(totalTimeInSeconds)
         timerToggle();
+        if (timerOffFlag) {
+            switchTimer();
+            timerOffFlag = false;
+        }
         return;
     }
+    timerOffFlag = true;
     console.log("running");
     totalTimeInSeconds--;
     console.log(totalTimeInSeconds)
     let hours = Math.floor(totalTimeInSeconds / 3600);
     let minutes = Math.floor((totalTimeInSeconds % 3600) / 60);
     let seconds = Math.floor(totalTimeInSeconds % 60);
-    timerInput.value = generateFormattedTime(hours, minutes, seconds);
+    timerInputElements[timerState.activeTimerIndex].value = generateFormattedTime(hours, minutes, seconds);
 
 }
 
@@ -87,7 +111,9 @@ export function timerToggle() {
     if (isActive) {
         timerInterval = setInterval(runTimer, 1000);
     } else {
+        console.log("timer interval: " + timerInterval);
         clearInterval(timerInterval);
         console.log("stopping")
     }
 }
+
