@@ -1,9 +1,12 @@
 import { resetTimer, switchActiveToShort, switchActiveToFocus, switchActiveToLong } from "./index.js";
+import timerEndAudio from './temp_timer_audio.mp3';
 let totalTimeInSeconds = 0;
 let isActive = false;
 let timerInterval = 0;
 const timerInputElements = document.querySelectorAll("#time");
 export let activeTimerIndex = 0;
+let startTime = null;
+let startingSeconds = 0;
 export const timerState = {
     activeTimerIndex: 0,
 };
@@ -84,10 +87,14 @@ export function switchTimer() {
     }
 }
 export function runTimer() {
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    totalTimeInSeconds = startingSeconds - elapsedTime
     if (!isActive || totalTimeInSeconds <= 0) {
         console.log(totalTimeInSeconds)
         timerToggle();
         if (timerOffFlag) {
+            var audio = new Audio(timerEndAudio);
+            audio.play();
             switchTimer();
             timerOffFlag = false;
         }
@@ -109,6 +116,8 @@ export function timerToggle() {
     isActive = !isActive;
     console.log(isActive)
     if (isActive) {
+        startTime = Date.now();
+        startingSeconds = totalTimeInSeconds;
         timerInterval = setInterval(runTimer, 1000);
     } else {
         console.log("timer interval: " + timerInterval);

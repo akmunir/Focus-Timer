@@ -16,11 +16,16 @@ const shortBreakTimer = document.querySelector("#short-break-timer");
 const longBreakTimer = document.querySelector("#long-break-timer");
 const longBtn = document.querySelector(".long-btn");
 const startIcon = startButton.querySelector("i");
+const timerCategory = document.querySelector(".timer-category");
+const activeTask = document.querySelector(".active-task");
 
 
 //console.log(timerInputElements.value);
 let hours = 0;
 //addEventListener("focusout", formatInput);
+
+timerCategory.textContent = activeTask.textContent;
+
 export function switchActiveToFocus() {
     focusTimer.classList.remove("hidden");
     focusBtn.classList.add("active");
